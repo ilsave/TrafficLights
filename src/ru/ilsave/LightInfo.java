@@ -6,8 +6,10 @@ import java.util.List;
 
 public class LightInfo {
 
-    private static Light svetoforHorizontal = new Light();
-    private static Light svetoforVertical = new Light();
+    private static Light svetoforVerticalLeftUp;
+    private static Light svetoforVerticalRightDown;
+    private static Light svetoforHorizontalLeftDown;
+    private static Light svetoforHorizontalRightUp;
 
     private static final List<Car> leftUpLightTraffic = Collections.synchronizedList(new ArrayList<>());
     private static final List<Car> leftDownLightTraffic = Collections.synchronizedList(new ArrayList<>());
@@ -17,12 +19,36 @@ public class LightInfo {
     private static int verticalTraffic;
     private static int horizontalTraffic;
 
-    public static Light getSvetoforVertical() {
-        return svetoforVertical;
+    public static void initProperties(){
+        svetoforVerticalLeftUp = new Light();
+        svetoforVerticalRightDown = new Light();
+        svetoforHorizontalLeftDown = new Light();
+        svetoforHorizontalRightUp = new Light();
     }
 
-    public static void setSvetoforVertical(Light svetoforVertical) {
-        LightInfo.svetoforVertical = svetoforVertical;
+
+    public static Light getSvetoforHorizontalLeftDown() {
+        return svetoforHorizontalLeftDown;
+    }
+
+    public static void setSvetoforHorizontalLeftDown(Light svetoforHorizontalLeftDown) {
+        LightInfo.svetoforHorizontalLeftDown = svetoforHorizontalLeftDown;
+    }
+
+    public static Light getSvetoforHorizontalRightUp() {
+        return svetoforHorizontalRightUp;
+    }
+
+    public static void setSvetoforHorizontalRightUp(Light svetoforHorizontalRightUp) {
+        LightInfo.svetoforHorizontalRightUp = svetoforHorizontalRightUp;
+    }
+
+    public static Light getSvetoforVerticalRightDown() {
+        return svetoforVerticalRightDown;
+    }
+
+    public static void setSvetoforVerticalRightDown(Light svetoforVerticalRightDown) {
+        LightInfo.svetoforVerticalRightDown = svetoforVerticalRightDown;
     }
 
     public static void setVerticalTraffic(int verticalTraffic) {
@@ -33,16 +59,16 @@ public class LightInfo {
         LightInfo.horizontalTraffic = horizontalTraffic;
     }
 
-    public static Light getSvetoforHorizontal() {
-        return svetoforHorizontal;
+    public static Light getSvetoforVerticalLeftUp() {
+        return svetoforVerticalLeftUp;
     }
 
     public static void setSvetoforState(LightState svetoforState) {
-        LightInfo.svetoforHorizontal.state = svetoforState;
+        LightInfo.svetoforVerticalLeftUp.state = svetoforState;
     }
 
-    public static void setSvetoforHorizontal(Light svetoforHorizontal) {
-        LightInfo.svetoforHorizontal = svetoforHorizontal;
+    public static void setSvetoforVerticalLeftUp(Light svetoforVerticalLeftUp) {
+        LightInfo.svetoforVerticalLeftUp = svetoforVerticalLeftUp;
     }
 
     public static int getHorizontalTraffic() {

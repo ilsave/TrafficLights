@@ -14,6 +14,7 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
+        LightInfo.initProperties();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -22,15 +23,21 @@ public class Main {
                     @Override
                     public void run() {
                         while(true){
-                            LightInfo.getSvetoforHorizontal().state = LightState.RED;
-                            LightInfo.getSvetoforVertical().state = LightState.GREEN;
+                            LightInfo.getSvetoforVerticalLeftUp().state = LightState.GREEN;
+                            LightInfo.getSvetoforVerticalRightDown().state = LightState.GREEN;
+                            LightInfo.getSvetoforHorizontalLeftDown().state = LightState.RED;
+                            LightInfo.getSvetoforHorizontalRightUp().state = LightState.RED;
                             try {
                                 Thread.sleep(15000L);
-                                LightInfo.getSvetoforHorizontal().state = LightState.YELLOW;
-                                LightInfo.getSvetoforVertical().state = LightState.YELLOW;
+                                LightInfo.getSvetoforVerticalLeftUp().state = LightState.YELLOW;
+                                LightInfo.getSvetoforVerticalRightDown().state = LightState.YELLOW;
+                                LightInfo.getSvetoforHorizontalLeftDown().state = LightState.YELLOW;
+                                LightInfo.getSvetoforHorizontalRightUp().state = LightState.YELLOW;
                                 Thread.sleep(5000L);
-                                LightInfo.getSvetoforHorizontal().state = LightState.GREEN;
-                                LightInfo.getSvetoforVertical().state = LightState.RED;
+                                LightInfo.getSvetoforVerticalLeftUp().state = LightState.RED;
+                                LightInfo.getSvetoforVerticalRightDown().state = LightState.RED;
+                                LightInfo.getSvetoforHorizontalLeftDown().state = LightState.GREEN;
+                                LightInfo.getSvetoforHorizontalRightUp().state = LightState.GREEN;
                                 Thread.sleep(15000L);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
@@ -44,7 +51,7 @@ public class Main {
                     @Override
                     public void run() {
                         while(true){
-                            if (LightInfo.getSvetoforHorizontal().state == LightState.GREEN
+                            if (LightInfo.getSvetoforVerticalLeftUp().state == LightState.GREEN
                                     && !LightInfo.getRightDownLightTraffic().isEmpty()){
                                 try {
                                     Thread.sleep(500L);
@@ -60,22 +67,42 @@ public class Main {
                     }
                 }).start();
 
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while(true){
+                            if (LightInfo.getSvetoforHorizontalLeftDown().state == LightState.GREEN
+                                    && LightInfo.getLeftDownLightTraffic().size() > 0){
+                                try {
+                                    Thread.sleep(500L);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                LightInfo.getLeftDownLightTraffic().remove(0);
+                                if (LightInfo.getRightUpLightTraffic().size() > 0){
+                                    LightInfo.getRightUpLightTraffic().remove(0);
+                                }
+                            }
+                        }
+                    }
+                }).start();
+
                 while (true) {
                     System.out.println("            |    |    |     ");
                     System.out.println("            |    |    |     ");
-                    System.out.println("           "+LightInfo.getLeftUpLightTraffic().size()+      "| |  |    |     ");
-                    System.out.println("         "+getState(LightInfo.getSvetoforHorizontal())+   "| ↓  |    |     ");
+                    System.out.println("           "+LightInfo.getLeftUpLightTraffic().size()+        "| |  |    |"+LightInfo.getRightUpLightTraffic().size());
+                    System.out.println("         "+getState(LightInfo.getSvetoforVerticalLeftUp())+   "| ↓  |    |"+getState(LightInfo.getSvetoforHorizontalRightUp()));
                     System.out.println("————————————┘         └————————————");
                     System.out.println("                       ←———         ");
                     System.out.println("————————————           ————————————");
                     System.out.println("        ———→                      ");
                     System.out.println("————————————┐         ┌————————————");
-                    System.out.println("            |    | ↑  |" + getState(LightInfo.getSvetoforHorizontal()));
-                    System.out.println("            |    | |  |" + LightInfo.getRightDownLightTraffic().size());
+                    System.out.println("         "+getState(LightInfo.getSvetoforHorizontalLeftDown())+"|    | ↑  |" + getState(LightInfo.getSvetoforVerticalLeftUp()));
+                    System.out.println("           "+LightInfo.getLeftDownLightTraffic().size()+       "|    | |  |" + LightInfo.getRightDownLightTraffic().size());
                     System.out.println("            |    |    |     ");
                     System.out.println("            |    |    |     ");
                     System.out.println();
-                    switch (random.nextInt(3)) {
+                    switch (random.nextInt(4)) {
                         case 0:
                             if (LightInfo.getRightDownLightTraffic().size() < 9) {
                                 LightInfo.addRightDownLightTraffic(new Car("Bmw"));
@@ -90,7 +117,15 @@ public class Main {
 //                            }
                             break;
                         case 2:
-                           // System.out.println("Bingo!");
+                            if (LightInfo.getLeftDownLightTraffic().size() < 9){
+                                LightInfo.addLeftDownLightTraffic(new Car("Bmw"));
+                            }
+                            break;
+
+                        case 3:
+                            if (LightInfo.getRightUpLightTraffic().size() < 9){
+                                LightInfo.addRightUpLightTraffic(new Car("Bmw"));
+                            }
                             break;
                     }
 
@@ -103,21 +138,7 @@ public class Main {
             }
         }).start();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    for (int i = 0; i < 30; i++) {
-                        System.out.println();
-                    }
-                }
-            }
-        }).start();
+
     }
     static String getState(Light svet){
         return switch (svet.state){

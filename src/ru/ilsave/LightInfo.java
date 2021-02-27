@@ -6,49 +6,49 @@ import java.util.List;
 
 public class LightInfo {
 
-    private static Light svetoforVerticalLeftUp;
-    private static Light svetoforVerticalRightDown;
-    private static Light svetoforHorizontalLeftDown;
-    private static Light svetoforHorizontalRightUp;
+    private static Light trafficLightVerticalLeftUp;
+    private static Light trafficLightVerticalRightDown;
+    private static Light trafficLightHorizontalLeftDown;
+    private static Light trafficLightHorizontalRightUp;
 
-    private static final List<Car> leftUpLightTraffic = Collections.synchronizedList(new ArrayList<>());
-    private static final List<Car> leftDownLightTraffic = Collections.synchronizedList(new ArrayList<>());
-    private static final List<Car> rightUpLightTraffic = Collections.synchronizedList(new ArrayList<>());
-    private static final List<Car> rightDownLightTraffic = Collections.synchronizedList(new ArrayList<>());
+    private static final List<Car> leftUpLightTrafficRoad = Collections.synchronizedList(new ArrayList<>());
+    private static final List<Car> leftDownLightTrafficRoad = Collections.synchronizedList(new ArrayList<>());
+    private static final List<Car> rightUpLightTrafficRoad = Collections.synchronizedList(new ArrayList<>());
+    private static final List<Car> rightDownLightTrafficRoad = Collections.synchronizedList(new ArrayList<>());
 
     private static int verticalTraffic;
     private static int horizontalTraffic;
 
     public static void initProperties(){
-        svetoforVerticalLeftUp = new Light();
-        svetoforVerticalRightDown = new Light();
-        svetoforHorizontalLeftDown = new Light();
-        svetoforHorizontalRightUp = new Light();
+        trafficLightVerticalLeftUp = new Light();
+        trafficLightVerticalRightDown = new Light();
+        trafficLightHorizontalLeftDown = new Light();
+        trafficLightHorizontalRightUp = new Light();
     }
 
 
-    public static Light getSvetoforHorizontalLeftDown() {
-        return svetoforHorizontalLeftDown;
+    public static Light getTrafficLightHorizontalLeftDown() {
+        return trafficLightHorizontalLeftDown;
     }
 
-    public static void setSvetoforHorizontalLeftDown(Light svetoforHorizontalLeftDown) {
-        LightInfo.svetoforHorizontalLeftDown = svetoforHorizontalLeftDown;
+    public static void setTrafficLightHorizontalLeftDown(Light trafficLightHorizontalLeftDown) {
+        LightInfo.trafficLightHorizontalLeftDown = trafficLightHorizontalLeftDown;
     }
 
-    public static Light getSvetoforHorizontalRightUp() {
-        return svetoforHorizontalRightUp;
+    public static Light getTrafficLightHorizontalRightUp() {
+        return trafficLightHorizontalRightUp;
     }
 
-    public static void setSvetoforHorizontalRightUp(Light svetoforHorizontalRightUp) {
-        LightInfo.svetoforHorizontalRightUp = svetoforHorizontalRightUp;
+    public static void setTrafficLightHorizontalRightUp(Light trafficLightHorizontalRightUp) {
+        LightInfo.trafficLightHorizontalRightUp = trafficLightHorizontalRightUp;
     }
 
-    public static Light getSvetoforVerticalRightDown() {
-        return svetoforVerticalRightDown;
+    public static Light getTrafficLightVerticalRightDown() {
+        return trafficLightVerticalRightDown;
     }
 
-    public static void setSvetoforVerticalRightDown(Light svetoforVerticalRightDown) {
-        LightInfo.svetoforVerticalRightDown = svetoforVerticalRightDown;
+    public static void setTrafficLightVerticalRightDown(Light trafficLightVerticalRightDown) {
+        LightInfo.trafficLightVerticalRightDown = trafficLightVerticalRightDown;
     }
 
     public static void setVerticalTraffic(int verticalTraffic) {
@@ -59,36 +59,36 @@ public class LightInfo {
         LightInfo.horizontalTraffic = horizontalTraffic;
     }
 
-    public static Light getSvetoforVerticalLeftUp() {
-        return svetoforVerticalLeftUp;
+    public static Light getTrafficLightVerticalLeftUp() {
+        return trafficLightVerticalLeftUp;
     }
 
     public static void setSvetoforState(LightState svetoforState) {
-        LightInfo.svetoforVerticalLeftUp.state = svetoforState;
+        LightInfo.trafficLightVerticalLeftUp.state = svetoforState;
     }
 
-    public static void setSvetoforVerticalLeftUp(Light svetoforVerticalLeftUp) {
-        LightInfo.svetoforVerticalLeftUp = svetoforVerticalLeftUp;
+    public static void setTrafficLightVerticalLeftUp(Light trafficLightVerticalLeftUp) {
+        LightInfo.trafficLightVerticalLeftUp = trafficLightVerticalLeftUp;
     }
 
     public static int getHorizontalTraffic() {
         return horizontalTraffic;
     }
 
-    public static List<Car> getLeftUpLightTraffic() {
-        return leftUpLightTraffic;
+    public static List<Car> getLeftUpLightTrafficRoad() {
+        return leftUpLightTrafficRoad;
     }
 
-    public static List<Car> getLeftDownLightTraffic() {
-        return leftDownLightTraffic;
+    public static List<Car> getLeftDownLightTrafficRoad() {
+        return leftDownLightTrafficRoad;
     }
 
-    public static List<Car> getRightUpLightTraffic() {
-        return rightUpLightTraffic;
+    public static List<Car> getRightUpLightTrafficRoad() {
+        return rightUpLightTrafficRoad;
     }
 
-    public static List<Car> getRightDownLightTraffic() {
-        return rightDownLightTraffic;
+    public static List<Car> getRightDownLightTrafficRoad() {
+        return rightDownLightTrafficRoad;
     }
 
     public static int getVerticalTraffic() {
@@ -96,27 +96,27 @@ public class LightInfo {
     }
 
     public static void addElementLeftUpLightTraffic(Car element) {
-        LightInfo.leftUpLightTraffic.add(element);
-        verticalTraffic = leftUpLightTraffic.size() + rightDownLightTraffic.size();
+        LightInfo.leftUpLightTrafficRoad.add(element);
+        verticalTraffic = leftUpLightTrafficRoad.size() + rightDownLightTrafficRoad.size();
     }
 
     public static void addLeftUpLightTraffic(Car element) {
-        LightInfo.leftUpLightTraffic.add(element);
-        verticalTraffic = leftUpLightTraffic.size() + rightDownLightTraffic.size();
+        LightInfo.leftUpLightTrafficRoad.add(element);
+        verticalTraffic = leftUpLightTrafficRoad.size() + rightDownLightTrafficRoad.size();
     }
 
     public static void addLeftDownLightTraffic(Car element) {
-        LightInfo.leftDownLightTraffic.add(element);
-        horizontalTraffic = leftDownLightTraffic.size() + rightUpLightTraffic.size();
+        LightInfo.leftDownLightTrafficRoad.add(element);
+        horizontalTraffic = leftDownLightTrafficRoad.size() + rightUpLightTrafficRoad.size();
     }
 
     public static void addRightUpLightTraffic(Car element) {
-        LightInfo.rightUpLightTraffic.add(element);
-        horizontalTraffic = rightUpLightTraffic.size() + leftDownLightTraffic.size();
+        LightInfo.rightUpLightTrafficRoad.add(element);
+        horizontalTraffic = rightUpLightTrafficRoad.size() + leftDownLightTrafficRoad.size();
     }
 
     public static void addRightDownLightTraffic(Car element) {
-        LightInfo.rightDownLightTraffic.add(element);
-        verticalTraffic = rightDownLightTraffic.size() + leftUpLightTraffic.size();
+        LightInfo.rightDownLightTrafficRoad.add(element);
+        verticalTraffic = rightDownLightTrafficRoad.size() + leftUpLightTrafficRoad.size();
     }
 }

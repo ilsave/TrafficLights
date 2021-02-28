@@ -13,8 +13,6 @@ public class MyThreadTrafficLight extends Thread{
     private long middleTime = 5000L;
     private long lastTime = 15000L;
 
-
-
     private List<Car> leftUpLightTrafficList;
     private List<Car> leftDownLightTrafficList;
     private List<Car> rightUpLightTrafficList;

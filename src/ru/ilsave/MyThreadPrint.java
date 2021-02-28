@@ -5,6 +5,8 @@ import java.util.Observable;
 
 public class MyThreadPrint extends Thread {
 
+    private static final long BASIC_DELAY = 1000L;
+
     private List<Car> leftUpLightTrafficList;
     private List<Car> leftDownLightTrafficList;
     private List<Car> rightUpLightTrafficList;
@@ -45,14 +47,13 @@ public class MyThreadPrint extends Thread {
         StringBuilder stringBuilder = new StringBuilder();
         while (true) {
             try {
-                Thread.sleep(1000l);
+                Thread.sleep(BASIC_DELAY);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             stringBuilder.append("            |    |    |     ").append("\n");
             stringBuilder.append("            |    |    |     ").append("\n");
-            stringBuilder.append("           ").append(leftUpLightTrafficList.size()).append("| |  |    |").append(rightUpLightTrafficList.size()).append("\n");
+            stringBuilder.append("           ").append(customListSize(leftUpLightTrafficList)).append("| |  |    |").append(customListSize(rightUpLightTrafficList)).append("\n");
             stringBuilder.append("         ").append(getState(trafficLightLeftUp)).append("| ↓  |    |").append(getState(trafficLightRightUp)).append("\n");
             stringBuilder.append("————————————┘         └————————————").append("\n");
             stringBuilder.append("                       ←———         ").append("\n");
@@ -60,11 +61,10 @@ public class MyThreadPrint extends Thread {
             stringBuilder.append("        ———→                      ").append("\n");
             stringBuilder.append("————————————┐         ┌————————————").append("\n");
             stringBuilder.append("         ").append(getState(trafficLightLeftDown)).append("|    | ↑  |").append(getState(trafficLightRightDown)).append("\n");
-            stringBuilder.append("           ").append(leftDownLightTrafficList.size()).append("|    | |  |").append(rightDownLightTrafficList.size()).append("\n");
+            stringBuilder.append("           ").append(customListSize(leftDownLightTrafficList)).append("|    | |  |").append(customListSize(rightDownLightTrafficList)).append("\n");
             stringBuilder.append("            |    |    |     ").append("\n");
             stringBuilder.append("            |    |    |     ").append("\n");
-            stringBuilder.append("").append("\n");
-
+            stringBuilder.append(" ").append("\n");
             System.out.println(stringBuilder);
         }
     }
@@ -74,14 +74,15 @@ public class MyThreadPrint extends Thread {
         else return 9;
     }
 
-    static String getState(Light svet) {
+    static String getState(Light svet){
         return switch (svet.state) {
             case RED -> "Red";
             case GREEN -> "Grn";
             case YELLOW -> "Ylw";
             case FLASHINGGREEN -> "FlG";
             case NONE ->  "NON";
-            case BROKEN -> "Throw new exception";
+            case BROKEN -> "It's STATE OF EMERGENCY, CALL THE SERVICE, RIGHT NOW!";
         };
     }
+
 }

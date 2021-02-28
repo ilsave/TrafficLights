@@ -3,7 +3,7 @@ package ru.ilsave;
 import java.util.List;
 import java.util.Random;
 
-public class MyThreadTimerDeleter extends Thread {
+public class MyThreadRoadAutoWorker extends Thread {
 
     private List<Car> leftUpLightTrafficList;
     private List<Car> leftDownLightTrafficList;
@@ -39,38 +39,57 @@ public class MyThreadTimerDeleter extends Thread {
         while (true) {
             try {
                 Thread.sleep(500L);
-                if (trafficLightLeftUp.state == LightState.GREEN
+                if ((trafficLightLeftUp.state == LightState.GREEN || trafficLightLeftUp.state == LightState.FLASHINGGREEN)
                         && !leftUpLightTrafficList.isEmpty()) {
                     leftUpLightTrafficList.remove(0);
                 }
-                if (trafficLightRightDown.state == LightState.GREEN
+                if ((trafficLightRightDown.state == LightState.GREEN || trafficLightRightDown.state == LightState.FLASHINGGREEN)
                         && !rightDownLightTrafficList.isEmpty()) {
                     rightDownLightTrafficList.remove(0);
                 }
-                if (trafficLightLeftDown.state == LightState.GREEN
+                if ((trafficLightLeftDown.state == LightState.GREEN || trafficLightLeftDown.state == LightState.FLASHINGGREEN)
                         && !leftDownLightTrafficList.isEmpty()) {
                     leftDownLightTrafficList.remove(0);
                 }
-                if (trafficLightRightUp.state == LightState.GREEN
+                if ((trafficLightRightUp.state == LightState.GREEN || trafficLightRightUp.state == LightState.FLASHINGGREEN)
                         && !rightUpLightTrafficList.isEmpty()) {
                     rightUpLightTrafficList.remove(0);
                 }
                 Thread.sleep(500L);
                 switch (random.nextInt(4)) {
                     case 0:
-                        leftUpLightTrafficList.add(new Car("Bmw"));
+                        if(leftUpLightTrafficList.size() < 9){
+                            leftUpLightTrafficList.add(new Car("Bmw"));
+                        }
+                        if(leftDownLightTrafficList.size() < 9){
+                            leftDownLightTrafficList.add(new Car("Kamaz"));
+                        }
                         break;
-
                     case 1:
-                        rightDownLightTrafficList.add(new Car("Audi"));
+//                        if(rightDownLightTrafficList.size() < 9){
+                            rightDownLightTrafficList.add(new Car("Audi"));
+//                        }
+//                        if(rightUpLightTrafficList.size() < 9){
+                            rightUpLightTrafficList.add(new Car("ds"));
+//                        }
                         break;
 
                     case 2:
-                        leftDownLightTrafficList.add(new Car("Lada"));
+//                        if(leftDownLightTrafficList.size() < 9){
+                            leftDownLightTrafficList.add(new Car("Lada"));
+//                        }
+//                        if(leftUpLightTrafficList.size() < 9){
+                            leftUpLightTrafficList.add(new Car("Bmw"));
+//                        }
                         break;
 
                     case 3:
-                        rightUpLightTrafficList.add(new Car("Honda"));
+//                        if(rightUpLightTrafficList.size() < 9){
+                            rightUpLightTrafficList.add(new Car("Honda"));
+//                        }
+//                        if(rightDownLightTrafficList.size() < 9){
+                            rightDownLightTrafficList.add(new Car("Mazda"));
+//                        }
                         break;
                 }
             } catch (InterruptedException e) {

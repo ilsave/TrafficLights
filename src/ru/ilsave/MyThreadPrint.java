@@ -1,8 +1,9 @@
 package ru.ilsave;
 
 import java.util.List;
+import java.util.Observable;
 
-public class MyThreadPrint extends Thread{
+public class MyThreadPrint extends Thread {
 
     private List<Car> leftUpLightTrafficList;
     private List<Car> leftDownLightTrafficList;
@@ -15,16 +16,24 @@ public class MyThreadPrint extends Thread{
     private Light trafficLightLeftDown;
     private Light trafficLightRightUp;
 
-    void setAllArgs(List<Car> leftUpLightTraffic, List<Car> leftDownLightTraffic,
-                    List<Car> rightUpLightTraffic, List<Car> rightDownLightTraffic) {
+    void setAllArgs(
+            List<Car> leftUpLightTraffic,
+            List<Car> leftDownLightTraffic,
+            List<Car> rightUpLightTraffic,
+            List<Car> rightDownLightTraffic
+    ) {
         this.leftUpLightTrafficList = leftUpLightTraffic;
         this.leftDownLightTrafficList = leftDownLightTraffic;
         this.rightDownLightTrafficList = rightDownLightTraffic;
         this.rightUpLightTrafficList = rightUpLightTraffic;
     }
 
-    void setAllLightArgs(Light trafficLightVerticalLeftUp, Light trafficLightVerticalRightDown,
-                         Light trafficLightHorizontalLeftDown, Light trafficLightHorizontalRightUp) {
+    void setAllLightArgs(
+            Light trafficLightVerticalLeftUp,
+            Light trafficLightVerticalRightDown,
+            Light trafficLightHorizontalLeftDown,
+            Light trafficLightHorizontalRightUp
+    ) {
         this.trafficLightLeftUp = trafficLightVerticalLeftUp;
         this.trafficLightLeftDown = trafficLightHorizontalLeftDown;
         this.trafficLightRightUp = trafficLightHorizontalRightUp;
@@ -33,30 +42,45 @@ public class MyThreadPrint extends Thread{
 
     @Override
     public void run() {
+        StringBuilder stringBuilder = new StringBuilder();
         while (true) {
-            System.out.println("            |    |    |     ");
-            System.out.println("            |    |    |     ");
-            System.out.println("           " + leftUpLightTrafficList.size() + "| |  |    |" + rightUpLightTrafficList.size());
-            System.out.println("         " + getState(trafficLightLeftUp) + "| ↓  |    |" + getState(trafficLightRightUp));
-            System.out.println("————————————┘         └————————————");
-            System.out.println("                       ←———         ");
-            System.out.println("————————————           ————————————");
-            System.out.println("        ———→                      ");
-            System.out.println("————————————┐         ┌————————————");
-            System.out.println("         " + getState(trafficLightLeftDown) + "|    | ↑  |" + getState(trafficLightRightDown));
-            System.out.println("           " + leftDownLightTrafficList.size() + "|    | |  |" + rightDownLightTrafficList.size());
-            System.out.println("            |    |    |     ");
-            System.out.println("            |    |    |     ");
-            System.out.println();
+            try {
+                Thread.sleep(1000l);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            stringBuilder.append("            |    |    |     ").append("\n");
+            stringBuilder.append("            |    |    |     ").append("\n");
+            stringBuilder.append("           ").append(leftUpLightTrafficList.size()).append("| |  |    |").append(rightUpLightTrafficList.size()).append("\n");
+            stringBuilder.append("         ").append(getState(trafficLightLeftUp)).append("| ↓  |    |").append(getState(trafficLightRightUp)).append("\n");
+            stringBuilder.append("————————————┘         └————————————").append("\n");
+            stringBuilder.append("                       ←———         ").append("\n");
+            stringBuilder.append("————————————           ————————————").append("\n");
+            stringBuilder.append("        ———→                      ").append("\n");
+            stringBuilder.append("————————————┐         ┌————————————").append("\n");
+            stringBuilder.append("         ").append(getState(trafficLightLeftDown)).append("|    | ↑  |").append(getState(trafficLightRightDown)).append("\n");
+            stringBuilder.append("           ").append(leftDownLightTrafficList.size()).append("|    | |  |").append(rightDownLightTrafficList.size()).append("\n");
+            stringBuilder.append("            |    |    |     ").append("\n");
+            stringBuilder.append("            |    |    |     ").append("\n");
+            stringBuilder.append("").append("\n");
+
+            System.out.println(stringBuilder);
         }
     }
 
-    static String getState(Light svet){
-        return switch (svet.state){
+    private int customListSize(List<Car> list){
+        if (list.size() < 9) return list.size();
+        else return 9;
+    }
+
+    static String getState(Light svet) {
+        return switch (svet.state) {
             case RED -> "Red";
             case GREEN -> "Grn";
             case YELLOW -> "Ylw";
             case FLASHINGGREEN -> "FlG";
+            case NONE ->  "NON";
             case BROKEN -> "Throw new exception";
         };
     }

@@ -106,20 +106,20 @@ public class MyThreadTrafficLight extends Thread implements Closeable {
         }
         if (horizontalTraffic > 0) {
             if ((float)(verticalTraffic / horizontalTraffic) > 1.2){
-                firstTime = 10000L;
-                lastTime = 20000L;
+                firstTime = 20000L;
+                lastTime = 40000L;
                 return;
             }
         }
         if (verticalTraffic > 0){
             if ((float)(horizontalTraffic / verticalTraffic) > 1.2){
-                firstTime = 20000L;
-                lastTime = 10000L;
+                firstTime = 40000L;
+                lastTime = 20000L;
                 return;
             }
         }
-        firstTime = 15000L;
-        lastTime = 15000L;
+        firstTime = 30000L;
+        lastTime = 30000L;
 
     }
 

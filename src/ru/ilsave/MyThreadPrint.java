@@ -1,9 +1,16 @@
 package ru.ilsave;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.List;
 import java.util.Observable;
 
-public class MyThreadPrint extends Thread {
+public class MyThreadPrint extends Thread implements Closeable {
+
+    @Override
+    public void close() {
+        this.interrupt();
+    }
 
     private static final long BASIC_DELAY = 1000L;
 

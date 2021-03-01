@@ -4,28 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/*
-1) сколько потоков в программе?
-     1 - отрисовка машин
-     2 - время
-     3 - генератор машин  - зависит от текущего времени, утро или вечер - много машин,
-            днем и утром - мало машин
-2) как рисовать?
-3) че по файлам?
- */
-
-/*
-1) threads in separated files
-2) DI
-3) implement all
- */
 public class Main {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args)  {
 
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
+
         Light trafficLightVerticalLeftUp = new Light();
         Light trafficLightVerticalRightDown = new Light();
         Light trafficLightHorizontalLeftDown = new Light();
@@ -45,17 +28,18 @@ public class Main {
                 trafficLightVerticalRightDown,
                 trafficLightHorizontalLeftDown,
                 trafficLightHorizontalRightUp);
-        myThreadRoadAutoWorker.start();
 
         MyThreadTrafficLight myThreadTrafficLight = new MyThreadTrafficLight();
         myThreadTrafficLight.setAllArgs(
-                leftUpLightTraffic, leftDownLightTraffic, rightUpLightTraffic, rightDownLightTraffic);
+                leftUpLightTraffic,
+                leftDownLightTraffic,
+                rightUpLightTraffic,
+                rightDownLightTraffic);
         myThreadTrafficLight.setAllLightArgs(
                 trafficLightVerticalLeftUp,
                 trafficLightVerticalRightDown,
                 trafficLightHorizontalLeftDown,
                 trafficLightHorizontalRightUp);
-        myThreadTrafficLight.start();
 
         MyThreadPrint myThreadPrint = new MyThreadPrint();
         myThreadPrint.setAllArgs(leftUpLightTraffic, leftDownLightTraffic, rightUpLightTraffic, rightDownLightTraffic);
@@ -64,7 +48,27 @@ public class Main {
                 trafficLightVerticalRightDown,
                 trafficLightHorizontalLeftDown,
                 trafficLightHorizontalRightUp);
+
+        Thread hook = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    myThreadPrint.close();
+                    myThreadRoadAutoWorker.close();
+                    myThreadTrafficLight.close();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+                System.out.println("Program successfully closed. Thank you for your attention!");
+            }
+        });
+        Runtime.getRuntime().addShutdownHook(hook);
+
+        myThreadRoadAutoWorker.start();
+        myThreadTrafficLight.start();
         myThreadPrint.start();
+
+
 
         try {
             myThreadRoadAutoWorker.join();

@@ -1,8 +1,15 @@
 package ru.ilsave;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.List;
 
-public class MyThreadTrafficLight extends Thread{
+public class MyThreadTrafficLight extends Thread implements Closeable {
+
+    @Override
+    public void close() {
+        this.interrupt();
+    }
 
     private static final int ROAD_MINIMUM_DIFFERENCE = 7;
     private static final long TRAFFIC_LIGHT_FLASHING_GREEN = 7500L;

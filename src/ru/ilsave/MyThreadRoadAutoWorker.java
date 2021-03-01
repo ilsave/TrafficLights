@@ -7,6 +7,8 @@ import java.util.Random;
 
 public class MyThreadRoadAutoWorker extends Thread implements Closeable {
 
+    private static final long BASIC_DELAY  = 500L;
+
     @Override
     public void close() {
         this.interrupt();
@@ -45,7 +47,7 @@ public class MyThreadRoadAutoWorker extends Thread implements Closeable {
         Random random = new Random();
         while (true) {
             try {
-                Thread.sleep(500L);
+                Thread.sleep(BASIC_DELAY);
                 if ((trafficLightLeftUp.state == LightState.GREEN || trafficLightLeftUp.state == LightState.FLASHINGGREEN)
                         && !leftUpLightTrafficList.isEmpty()) {
                     leftUpLightTrafficList.remove(0);
@@ -62,7 +64,7 @@ public class MyThreadRoadAutoWorker extends Thread implements Closeable {
                         && !rightUpLightTrafficList.isEmpty()) {
                     rightUpLightTrafficList.remove(0);
                 }
-                Thread.sleep(500L);
+                Thread.sleep(BASIC_DELAY);
                 switch (random.nextInt(4)) {
                     case 0:
                         if(leftUpLightTrafficList.size() < 9){
@@ -73,30 +75,18 @@ public class MyThreadRoadAutoWorker extends Thread implements Closeable {
                         }
                         break;
                     case 1:
-//                        if(rightDownLightTrafficList.size() < 9){
                             rightDownLightTrafficList.add(new Car("Audi"));
-//                        }
-//                        if(rightUpLightTrafficList.size() < 9){
                             rightUpLightTrafficList.add(new Car("ds"));
-//                        }
                         break;
 
                     case 2:
-//                        if(leftDownLightTrafficList.size() < 9){
                             leftDownLightTrafficList.add(new Car("Lada"));
-//                        }
-//                        if(leftUpLightTrafficList.size() < 9){
                             leftUpLightTrafficList.add(new Car("Bmw"));
-//                        }
                         break;
 
                     case 3:
-//                        if(rightUpLightTrafficList.size() < 9){
                             rightUpLightTrafficList.add(new Car("Honda"));
-//                        }
-//                        if(rightDownLightTrafficList.size() < 9){
                             rightDownLightTrafficList.add(new Car("Mazda"));
-//                        }
                         break;
                 }
             } catch (InterruptedException e) {
